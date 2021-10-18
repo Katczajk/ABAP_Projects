@@ -37,6 +37,16 @@ ENDLOOP.
 data(g_subrc) = sy-subrc.
 perform some_form CHANGING g_subrc.
 
+" old form of declaration
+data la_zdemo11 type ref to zdemo1.
+FIELD-SYMBOLS <fs1> type zdemo1.
+CREATE DATA la_zdemo11.
+ASSIGN la_zdemo11->* to <fs1>.
+
+"new form of declaration
+data la_zdemo1 type ref to zdemo1.
+CREATE DATA la_zdemo1.
+ASSIGN la_zdemo1->* to FIELD-SYMBOL(<fs>).
 
 write: / number1, number2.
 
