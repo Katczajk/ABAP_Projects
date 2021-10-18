@@ -50,7 +50,7 @@ ASSIGN la_zdemo1->* to FIELD-SYMBOL(<fs>).
 
 write: / number1, number2.
 
-
+zmessage=>altert_db_not_found( dbname = 'ZDEMO1' ).
 
 
 
