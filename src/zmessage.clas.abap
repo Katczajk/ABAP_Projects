@@ -7,9 +7,7 @@ public section.
 
   class-methods ALTERT_DB_NOT_FOUND
     importing
-      value(DBNAME) type TABNAME optional
-    exceptions
-      CX_SMT_NO_PARAMETER .
+      value(DBNAME) type TABNAME optional .
 protected section.
 private section.
 ENDCLASS.
