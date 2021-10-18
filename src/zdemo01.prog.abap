@@ -48,7 +48,21 @@ data la_zdemo1 type ref to zdemo1.
 CREATE DATA la_zdemo1.
 ASSIGN la_zdemo1->* to FIELD-SYMBOL(<fs>).
 
-write: / number1, number2.
+" the new try block
+" i think its a little bit harder to read them or not?
+try.
+  data(ergeb) = 5 / 0.
+
+  " catch from master class cx_root sample with new inline declarations
+  catch cx_root into data(obj1).
+    CALL METHOD obj1->if_message~get_text
+      RECEIVING
+        " returning variable also with inline declarations
+        result = data(v_msg)
+        .
+    write: / 'This is a short Text :', v_msg.
+
+endtry.
 
 zmessage=>altert_db_not_found( dbname = 'ZDEMO1' ).
 

@@ -1,6 +1,5 @@
 class ZMESSAGE definition
   public
-  final
   create public .
 
 public section.
@@ -23,10 +22,10 @@ data l_errormsg type string.
 
 if dbname is INITIAL.
   l_errormsg = 'Database not found.' .
-  message l_errormsg type 'E'.
+  message l_errormsg type 'S'.
 else.
   CONCATENATE dbname ' not found.' into l_errormsg.
-  message l_errormsg type 'E'.
+  message l_errormsg type 'S'.
 endif.
 
   endmethod.
