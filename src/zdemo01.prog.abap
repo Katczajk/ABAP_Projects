@@ -33,7 +33,32 @@ loop at it_zdemo01 into data(wa_zdemo01).
 
 ENDLOOP.
 
-
+" inline declaration
+data(g_subrc) = sy-subrc.
+perform some_form CHANGING g_subrc.
 
 
 write: / number1, number2.
+
+
+
+
+
+
+
+
+
+*&---------------------------------------------------------------------*
+*& Form some_form
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      <-- l_subrc
+*&---------------------------------------------------------------------*
+FORM some_form  CHANGING l_subrc TYPE sy-subrc.
+
+  " also a inline declaration
+  data(p_subrc) = sy-subrc.
+  l_subrc = p_subrc.
+
+ENDFORM.
