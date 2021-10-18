@@ -10,7 +10,6 @@ data number1 type i VALUE 5.
 " new after 7.40
 data(number2) = 5.
 
-
 " old before 7.40
 data: g_ztext1 like zdemo1-ztext.
 select single ztext from zdemo1 into g_ztext1.
