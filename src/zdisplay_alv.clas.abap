@@ -71,7 +71,7 @@ CLASS ZDISPLAY_ALV IMPLEMENTATION.
 *       IT_FILTER                         =
 *       IS_SEL_HIDE                       =
 *       I_DEFAULT                         = 'X'
-*       I_SAVE                            = ' '
+        I_SAVE                            = 'A'
 *       IS_VARIANT                        =
 *       IT_EVENTS                         =
 *       IT_EVENT_EXIT                     =
