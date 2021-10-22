@@ -63,7 +63,7 @@ try.
 
 endtry.
 
-zmessage=>altert_db_not_found( dbname = 'ZDEMO1' ).
+
 
 
 
