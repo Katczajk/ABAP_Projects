@@ -41,7 +41,7 @@ CLASS ZDISPLAY_ALV IMPLEMENTATION.
 
   method CREATE_AVL.
 
-    data lt_zdemo1 TYPE table of zdemo1.
+    data lt_zdemo1 TYPE table of ZDEMO1.
 
     select * from (l_dbname) into table lt_zdemo1.
 
