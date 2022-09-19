@@ -32,4 +32,23 @@ endcase.
 
 endwhile.
 
+
+* here another form to solve unknown string problems
+* take length as parameter and check from table symbol space and ;
+* this also result but string would display reverse
+
+data: string type string value '',
+      laenge type i value 0.
+
+string = pa_zpara-value.
+laenge = strlen( string ).
+
+do laenge times.
+  laenge = laenge - 1.
+  check not string+laenge(1) = ';'.
+  check not string+laenge(1) = ' '.
+  wa_struct-matnr = string+laenge(1).
+  append wa_struct to it_struct.
+enddo.
+
 ENDFORM.                    " SPLIT_STRING
