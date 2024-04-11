@@ -119,6 +119,7 @@ loop at et_nast into e_nast.
   clear: nast.
   move e_nast to nast.
   check sy-sysid <> 'E01'.
+  " reminder there is no upate to BALHDR !!!
   perform einzelnachricht(rsnast00) using i_rcode.
 
 endloop.
