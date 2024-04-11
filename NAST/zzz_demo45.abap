@@ -10,17 +10,7 @@ REPORT  ZZZ_DEMO45.
 
 tables: nast.
 
-types: begin of t_msg,
-            MSG_ARBGB like sy-msgid,
-            MSG_NR like sy-msgno,
-            MSG_TY like sy-msgty,
-            MSG_V1 like sy-msgv1,
-            MSG_V2 like sy-msgv2,
-            MSG_V3 like sy-msgv3,
-            MSG_V4 like sy-msgv4,
-        end of t_msg,
-
-        t_nast type nast,
+types:  t_nast type nast,
         t_nast_t type STANDARD TABLE OF nast.
 
 
@@ -28,21 +18,25 @@ data: it_nast type t_nast_t,
       wa_nast type t_nast,
       i_nast type nast,
       e_nast type nast,
-      i_rcode type sy-subrc,
-      i_msg type t_msg,
-      lv_kappl type nast-kappl,
-      lv_objky type nast-objky,
-      lv_kschl type nast-kschl,
-      lv_erdat type nast-erdat.
+      gv_kappl type nast-kappl,
+      gv_objky type nast-objky,
+      gv_kschl type nast-kschl,
+      gv_erdat type nast-erdat.
+
+CONSTANTS:
+            LP01            like nast-ldest value 'LP01',
+            LP02            like nast-ldest value 'LP02',
+            drucken         like nast-tdarmod value '1',
+            ablegen         like nast-tdarmod value '2',
+            drucken_ablegen like nast-tdarmod value '3'.
 
 
+SELECTION-SCREEN BEGIN OF BLOCK a01 with frame title text-001.
 
-SELECTION-SCREEN BEGIN OF BLOCK a01.
-
-  select-OPTIONS: s_kappl for lv_kappl,
-                  s_objky for lv_objky,
-                  s_kschl for lv_kschl,
-                  s_erdat for lv_erdat.
+  select-OPTIONS: s_kappl for gv_kappl,
+                  s_objky for gv_objky,
+                  s_kschl for gv_kschl,
+                  s_erdat for gv_erdat.
 
 
 SELECTION-SCREEN END OF BLOCK a01.
@@ -80,11 +74,13 @@ FORM COPY_NAST_MSG  USING    i_nast type nast
     e_nast-vstat = '0'.
     "Versandzeitpunkt - 1 durch App
     e_nast-vsztp = '1'.
-    e_nast-ldest = 'LP02'.
+    e_nast-ldest = LP02.
     e_nast-dimme = zcl_const=>gc_x.
-    "TDARMOD - 1 Drucken / 2 Ablegen / 3 Drucken & Ablegen
-    e_nast-tdarmod = '3'.
-    clear: e_nast-datvr, e_nast-uhrvr.
+    e_nast-tdarmod = ablegen.
+    e_nast-usnam = sy-uname.
+    e_nast-tdreceiver = sy-uname.
+    e_nast-MANUE = zcl_const=>gc_x.
+    clear: e_nast-datvr, e_nast-uhrvr, e_nast-delet, e_nast-aende.
 
   endif.
 
@@ -115,12 +111,14 @@ ENDFORM.                    " PRINT_NAST_ENTRIES
 
 FORM PRINT_NAST_ENTRIES  CHANGING et_nast type t_nast_t.
 
-data: e_nast type t_nast.
+data: e_nast type t_nast,
+      i_rcode type sy-subrc.
 
 loop at et_nast into e_nast.
 
   clear: nast.
   move e_nast to nast.
+  check sy-sysid <> 'E01'.
   perform einzelnachricht(rsnast00) using i_rcode.
 
 endloop.
@@ -135,6 +133,7 @@ ENDFORM.                    " PRINT_NAST_ENTRIES
 *----------------------------------------------------------------------*
 FORM UPDATE_NAST_TABLE  CHANGING et_nast type t_nast_t.
 
+check sy-sysid <> 'E01'.
 
 insert nast from table et_nast.
 
