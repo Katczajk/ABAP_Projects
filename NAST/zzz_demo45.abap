@@ -14,10 +14,10 @@ types:  t_nast type nast,
         t_nast_t type STANDARD TABLE OF nast.
 
 
-data: it_nast type t_nast_t,
-      wa_nast type t_nast,
-      i_nast type nast,
-      e_nast type nast,
+data:  it_nast type t_nast_t,
+       wa_nast type t_nast,
+        i_nast type nast,
+        e_nast type nast,
       gv_kappl type nast-kappl,
       gv_objky type nast-objky,
       gv_kschl type nast-kschl,
@@ -60,6 +60,23 @@ break pilz.
 
 
 
+FORM GET_NAST_ENTRIES  CHANGING et_nast type t_nast_t.
+
+data: e_nast type t_nast.
+
+select * from nast into e_nast
+                   where kappl in s_kappl
+                   and objky in s_objky
+                   and kschl in s_kschl
+                   and erdat in s_erdat
+                   and not tdarmod = drucken_ablegen
+                   ORDER BY erdat DESCENDING .
+
+   append e_nast to et_nast.
+
+endselect.
+
+ENDFORM.                    " GET_NAST_ENTRIES
 
 FORM COPY_NAST_MSG  USING    i_nast type nast
                     CHANGING e_nast type nast.
@@ -146,21 +163,3 @@ if sy-subrc <> 0.
 endif.
 
 ENDFORM.                    " UPDATE_NAST_TABLE
-
-FORM GET_NAST_ENTRIES  CHANGING et_nast type t_nast_t.
-
-data: e_nast type t_nast.
-
-select * from nast into e_nast
-                   where kappl in s_kappl
-                   and objky in s_objky
-                   and kschl in s_kschl
-                   and erdat in s_erdat
-                   ORDER BY erdat DESCENDING .
-
-
-   append e_nast to et_nast.
-
-endselect.
-
-ENDFORM.                    " GET_NAST_ENTRIES
